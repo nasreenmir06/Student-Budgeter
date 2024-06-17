@@ -7,6 +7,7 @@ const IncomeForm = ({ addIncome, incomeList, isValidValue }) => {
   const [frequency, setFrequency] = useState('');
   const [month, setMonth] = useState('');
 
+  
   const handleAddIncome = () => {
     if (!incomeType || !frequency || (['One Time', 'Yearly'].includes(frequency) && !month)) {
       window.alert("Please do not leave a default income selection");
