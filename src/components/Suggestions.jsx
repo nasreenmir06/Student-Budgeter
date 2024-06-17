@@ -5,6 +5,7 @@ const Suggestions = ({ suggestions }) => {
     return <div>{suggestions.error}</div>;
   }
 
+  
   return (
     <div>
       <p>Suggestions are made by ChatGPT. Check important info.</p>
