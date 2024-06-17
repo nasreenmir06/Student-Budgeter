@@ -7,7 +7,6 @@ import BudgetChart from './components/BudgetChart';
 import Suggestions from './components/Suggestions';
 import axios from 'axios';
 
-
 const App = () => {
   const [balance, setBalance] = useState(0);
   const [expenses, setExpenses] = useState([]);
