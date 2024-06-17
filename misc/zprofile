@@ -1,4 +1,4 @@
-# Use "nano ~/.zprofile" to open zprofile, then copy and paste the code below
+# Copy and paste the code below into a ~/.bashrc, ~/.zshrc, ~/.profile, or ~/.zprofile, depending on which shell you use
 
 # Setting PATH for Python 3.11
 PATH="/Library/Frameworks/Python.framework/Versions/3.11/bin:${PATH}"
