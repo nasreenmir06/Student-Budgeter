@@ -1,4 +1,5 @@
 # Copy and paste the code below into a ~/.bashrc, ~/.zshrc, ~/.profile, or ~/.zprofile, depending on which shell you use
+# Then source that file
 
 # Setting PATH for Python 3.11
 PATH="/Library/Frameworks/Python.framework/Versions/3.11/bin:${PATH}"
