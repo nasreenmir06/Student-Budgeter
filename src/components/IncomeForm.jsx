@@ -6,7 +6,6 @@ const IncomeForm = ({ addIncome, incomeList, isValidValue }) => {
   const [amount, setAmount] = useState('');
   const [frequency, setFrequency] = useState('');
   const [month, setMonth] = useState('');
-
   
   const handleAddIncome = () => {
     if (!incomeType || !frequency || (['One Time', 'Yearly'].includes(frequency) && !month)) {
