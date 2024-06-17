@@ -19,6 +19,7 @@ const BalanceForm = ({ setBalance, isValidValue }) => {
     setDisplayedBalance(money);
   };
 
+  
   return (
     <Form onSubmit={submitMoney} className="my-4 d-flex flex-column align-items-center">
       <h3 className="mb-4">Current Balance In Account</h3>
