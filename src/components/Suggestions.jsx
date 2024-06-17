@@ -4,7 +4,6 @@ const Suggestions = ({ suggestions }) => {
   if (suggestions.error) {
     return <div>{suggestions.error}</div>;
   }
-
   
   return (
     <div>
