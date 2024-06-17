@@ -27,3 +27,5 @@ I have unsuccessfully spent several hours attempting to get this site up and run
 - Copy and paste the code in "zprofile" into a ~/.bashrc, ~/.zshrc, ~/.profile, or ~/.zprofile, depending on which shell you use. Then source the file using the source command in terminal.
 
 As of 6/17/2024, the code is not yet finished, so you may notice that the site does not fully utilize Bootstrap yet. I am currently tackling those issues. I will update the code as I go.
+
+Upon completion, I will upload a demo video showing what the fully completed site should look like.
