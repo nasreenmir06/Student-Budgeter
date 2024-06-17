@@ -7,7 +7,6 @@ const ExpenseForm = ({ addExpenses, expenses, isValidValue }) => {
   const [frequency, setFrequency] = useState('');
   const [month, setMonth] = useState('');
 
-  
   const handleAddExpense = () => {
     if (!expenseType || !frequency || (['One Time', 'Yearly'].includes(frequency) && !month)) {
       window.alert("Please do not leave a default payment selection");
