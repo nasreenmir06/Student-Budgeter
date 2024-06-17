@@ -5,6 +5,7 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 Chart.register(...registerables);
 Chart.register(zoomPlugin);
 
+
 const BudgetChart = ({ data }) => {
   const chartRef = useRef(null);
 
