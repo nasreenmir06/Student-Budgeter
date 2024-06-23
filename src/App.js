@@ -244,7 +244,7 @@ const App = () => {
   return (
     <div className="d-flex flex-column min-vh-100 justify-content-top align-items-center">
       <Navbar className="justify-content-center fixed-top" expand={false} style={{ backgroundColor: '#e4e5e6' }}>
-        <Navbar.Brand className="ml-auto">Student Budgeter</Navbar.Brand>
+        <Navbar.Brand className="ml-auto" style={{ fontSize: '1.5rem' }}>Student Budgeter</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="ml-auto"/>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
