@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Form, Button, Row, Col, Card } from 'react-bootstrap';
+import { Form, Button, Row, Col, Card, Container } from 'react-bootstrap';
 
 const IncomeForm = ({ addIncome, incomeList, isValidValue }) => {
   const [incomeType, setIncomeType] = useState('');
   const [amount, setAmount] = useState('');
   const [frequency, setFrequency] = useState('');
   const [month, setMonth] = useState('');
-  
+
   const handleAddIncome = () => {
     if (!incomeType || !frequency || (['One Time', 'Yearly'].includes(frequency) && !month)) {
       window.alert("Please do not leave a default income selection");
@@ -107,20 +107,28 @@ const IncomeForm = ({ addIncome, incomeList, isValidValue }) => {
         )}
         <Button onClick={handleAddIncome} variant="primary">Add Income</Button>
       </Form>
-      <div className="mt-4">
-        {incomeList.map((income, index) => (
-          <Card key={index} className="mb-3">
-            <Card.Body>
-              <Card.Title>{income.incomeType}</Card.Title>
-              <Card.Text>
-                <strong>Amount:</strong> ${income.amount}<br />
-                <strong>Frequency:</strong> {income.frequency}<br />
-                {income.month && <><strong>Month:</strong> {income.month}</>}
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        ))}
-      </div>
+      <Container className="mt-4 mb-3">
+       {Array.from({ length: Math.ceil(incomeList.length / 3) }).map((_, rowIndex) => (
+         <Row key={rowIndex} xs={1} sm={2} md={3} className="g-4 justify-content-center mb-3">
+           {incomeList
+             .slice(rowIndex * 3, rowIndex * 3 + 3)
+             .map((income, index) => (
+               <Col key={index}> 
+                 <Card className="h-100" border="dark">
+                   <Card.Body className="d-flex flex-column justify-content-between">
+                     <Card.Title>{income.incomeType}</Card.Title>
+                     <Card.Text>
+                       <strong>Amount:</strong> ${income.amount}<br />
+                       <strong>Frequency:</strong> {income.frequency}<br />
+                       {income.month && <><strong>Month:</strong> {income.month}</>}
+                     </Card.Text>
+                   </Card.Body>
+                 </Card>
+               </Col>
+             ))}
+         </Row>
+       ))}
+     </Container>
     </div>
   ); 
 };
