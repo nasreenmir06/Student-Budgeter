@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Row, Col, Card } from 'react-bootstrap';
+import { Form, Button, Row, Col, Card, Container } from 'react-bootstrap';
 
 const ExpenseForm = ({ addExpenses, expenses, isValidValue }) => {
   const [expenseType, setExpenseType] = useState('');
@@ -51,6 +51,7 @@ const ExpenseForm = ({ addExpenses, expenses, isValidValue }) => {
               <option value="Tuition">Tuition</option>
               <option value="Phone">Phone Bill</option>
               <option value="Transportation">Transportation</option>
+              <option value="Entertainment">Entertainment</option>
               <option value="Miscellaneous">Miscellaneous (Payment)</option>
             </Form.Control>
           </Col>
@@ -109,20 +110,28 @@ const ExpenseForm = ({ addExpenses, expenses, isValidValue }) => {
         )}
         <Button onClick={handleAddExpense} variant="primary">Add Expense</Button>
       </Form>
-      <div className="mt-4">
-        {expenses.map((expense, index) => (
-          <Card key={index} className="mb-3">
-            <Card.Body>
-              <Card.Title>{expense.expenseType}</Card.Title>
-              <Card.Text>
-                <strong>Amount:</strong> ${expense.amount}<br />
-                <strong>Frequency:</strong> {expense.frequency}<br />
-                {expense.month && <><strong>Month:</strong> {expense.month}</>}
-              </Card.Text>
-            </Card.Body>
-          </Card>
+      <Container className="mt-4 mb-3">
+        {Array.from({ length: Math.ceil(expenses.length / 3) }).map((_, rowIndex) => (
+          <Row key={rowIndex} xs={1} sm={2} md={3} className="g-4 justify-content-center mb-3">
+            {expenses
+              .slice(rowIndex * 3, rowIndex * 3 + 3)
+              .map((expense, index) => (
+                <Col key={index}>
+                  <Card className="h-100" border="dark">
+                    <Card.Body className="d-flex flex-column justify-content-between">
+                      <Card.Title>{expense.expenseType}</Card.Title>
+                      <Card.Text>
+                        <strong>Amount:</strong> ${expense.amount}<br />
+                        <strong>Frequency:</strong> {expense.frequency}<br />
+                        {expense.month && <><strong>Month:</strong> {expense.month}</>}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+          </Row>
         ))}
-      </div>
+      </Container>
     </div>
   );
 };
