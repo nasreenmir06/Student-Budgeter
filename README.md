@@ -15,4 +15,8 @@ This is a React app also made with Bootstrap, Flask, and HTML. The purpose of th
 - axios
 
 ## Demo:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SQWkF5VZh-I?si=sERBQmmoZcTkO5WG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+https://github.com/nasreenmir06/student-budgeter/assets/171378555/bafd50fb-582c-40f6-aef4-1e5459479ef7
+
+
