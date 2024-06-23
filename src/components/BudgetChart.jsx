@@ -5,7 +5,7 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 Chart.register(...registerables);
 Chart.register(zoomPlugin);
 
-const BudgetChart = ({ data }) => {
+const BudgetChart = ({ data, resetZoomRef }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -16,6 +16,7 @@ const BudgetChart = ({ data }) => {
       data: data,
       options: {
         responsive: true,
+        maintainAspectRatio: true,
         plugins: {
           tooltip: {
             mode: 'nearest',
@@ -47,13 +48,25 @@ const BudgetChart = ({ data }) => {
               },
               mode: 'xy',
             }
-          }
+          },
+          title: {
+            display: true,
+            text: 'Budget Chart',
+            color: 'black',
+            font: {
+              size: 24
+            }
+          },
         },
         scales: {
           x: {
             stacked: true,
             barPercentage: 1.0,
-            categoryPercentage: 1.0
+            categoryPercentage: 1.0,
+            title: {
+              display: true,
+              text: 'Month' 
+            }
           },
           y: {
             stacked: true,
@@ -63,6 +76,10 @@ const BudgetChart = ({ data }) => {
               callback: function(value) {
                 return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
               }
+            },
+            title: {
+              display: true,
+              text: 'Amount ($)' 
             }
           }
         },
@@ -73,13 +90,20 @@ const BudgetChart = ({ data }) => {
       }
     });
 
+    resetZoomRef.current = () => {
+      myChart.resetZoom();
+    };
+
     return () => {
       myChart.destroy();
     };
-  }, [data]);
+    const resetZoom = () => {
+      myChart.resetZoom();
+    }
+  }, [data, resetZoomRef]);
 
   return (
-    <div>
+    <div className="chart-container" style={{ position: 'relative', width: '85vw', margin: '0 auto' }}>
       <canvas ref={chartRef} id="budgetChart"></canvas>
     </div>
   );
