@@ -1,6 +1,6 @@
 # student-budgeter
 
-This is a React app also made with Bootstrap, Flask, and HTML. The purpose of this app is to collect a student's financial data and display an informative chart of the student's finances, along with providing them some useful suggestions regarding their finances and direct them to resources that they could consult to make more informative spending/saving decisions.
+This is a React app also made with Bootstrap, Flask, and HTML. The purpose of this app is to collect a student's financial data and display an informative chart of the student's finances, along with providing them some useful suggestions regarding their budget and direct them to resources that they could consult to make more informative spending/saving decisions.
 
 ## Requirements:
 - Python v3.11
