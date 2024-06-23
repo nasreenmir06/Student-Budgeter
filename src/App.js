@@ -278,7 +278,7 @@ const App = () => {
             </Form.Control>
           </Col>
         </Row>
-        <Button onClick={handleSubmitInfo} variant="primary" className="mb-3">Submit All Financial Info</Button>
+        <Button onClick={handleSubmitInfo} variant="primary" className="mb-3">Submit All Financial Info & Generate Chart</Button>
         {showChart && (
           <>
             <BudgetChart data={chartData} resetZoomRef={resetZoomRef} />
