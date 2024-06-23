@@ -16,7 +16,10 @@ This is a React app also made with Bootstrap, Flask, and HTML. The purpose of th
 
 ## Demo:
 
-
 https://github.com/nasreenmir06/student-budgeter/assets/171378555/bafd50fb-582c-40f6-aef4-1e5459479ef7
+
+## Things to Improve:
+- color differentiation
+- user should be able to download their chart
 
 
