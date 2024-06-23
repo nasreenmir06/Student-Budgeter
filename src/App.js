@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Navbar } from 'react-bootstrap';
+import React, { useState, useRef } from 'react';
+import { Button, Nav, Navbar, NavDropdown, Col, Form, Row } from 'react-bootstrap';
 import BalanceForm from './components/BalanceForm';
 import ExpenseForm from './components/ExpenseForm';
 import IncomeForm from './components/IncomeForm';
@@ -17,6 +17,13 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [showChart, setShowChart] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const resetZoomRef = useRef(null);
+
+  const handleResetZoom = () => {
+    if (resetZoomRef.current) {
+      resetZoomRef.current();
+    }
+  };
 
   const addExpenses = (newExpenses) => {
     const updatedExpenses = [...expenses, ...newExpenses];
@@ -40,14 +47,14 @@ const App = () => {
     if (chartTimeRange === "Winter") {
       return ["January", "February", "March", "April"];
     }
-    if (chartTimeRange === "OneYear") {
-      return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    if (chartTimeRange === "OneSchoolYear") {
+      return ["September", "October", "November", "December", "January", "February", "March", "April"];
     }
-    if (chartTimeRange === "FourYears") {
-      return ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",
-              "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",
-              "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",
-              "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    if (chartTimeRange === "FourSchoolYears") {
+      return ["September", "October", "November", "December", "January", "February", "March", "April",
+              "September", "October", "November", "December", "January", "February", "March", "April",
+              "September", "October", "November", "December", "January", "February", "March", "April",
+              "September", "October", "November", "December", "January", "February", "March", "April"];
     }
   };
 
@@ -62,18 +69,20 @@ const App = () => {
     setLoading(true);
     setShowSuggestions(false);
     setSuggestions(null);
-    const prompt = `
+    if (expenses.length !== 0) {
+      const prompt = `
       I am a Canadian/American university student. Based on my financial info, provide some advice to improve my financial health:
       Expenses: ${expenses.map(exp => `\n  - Type: ${exp.expenseType}, Amount: ${exp.amount}, Frequency: ${exp.frequency}, Month: ${exp.month}`).join('')}
-      Income: ${incomeList.map(inc => `\n  - Type: ${inc.incomeType}, Amount: ${inc.amount}, Frequency: ${inc.frequency}, Month: ${inc.month}`).join('')}
-      Provide a sentence or two about each expense/income item, and you must express whether it is low, reasonable, or a lot.
+      Provide a sentence or two about each expense item, and you must express whether it is low, reasonable, or a lot.
       Here is some reference when generating your advice.
       Classifications for low, average, and high ranges of expenses for Canadian/American university students in various categories:
-      Food (Monthly): Low range: CAD/USD 150 - 250, average range: CAD/USD 250 - 400, high range: CAD/USD 400 - 600+
-      Rent (Monthly): Low range: CAD/USD 600 - 1200, average range: CAD/USD 1200 - 2500, high range: CAD/USD 1200 - 2500+
-      Phone Bill (Monthly): Low range: CAD/USD 20 - 40, average range: CAD/USD 40 - 80, high range: CAD/USD 80 - 120+
-      Transportation (Monthly): Low range: CAD/USD 30 - 60, average range: CAD/USD 60 - 150, high range: CAD/USD 150 - 300+
-      Miscellaneous (Monthly): Low range: CAD/USD 50 - 100, average range: CAD/USD 100 - 200, high range: CAD/USD 200 - 500+
+      Food (Monthly): Low range: CAD/USD 150 - 250, average range: CAD/USD 251 - 400, high range: CAD/USD 401 - 600+
+      Rent (Monthly): Low range: CAD/USD 500 - 750, average range: CAD/USD 751 - 1250, high range: CAD/USD 1251 - 2500+
+      Phone Bill (Monthly): Low range: CAD/USD 10 - 20, average range: CAD/USD 21 - 45, high range: CAD/USD 46 - 70+
+      Transportation (Monthly): Low range: CAD/USD 0 - 100, average range: CAD/USD 101 - 200, high range: CAD/USD 201 - 400+
+      Entertainment (Monthly): Low range: CAD/USD 0 - 50, average range: CAD/USD 51 - 150, high range: CAD/USD 151 - 300+
+      Miscellaneous (Monthly): Low range: CAD/USD 0 - 175, average range: CAD/USD 176 - 250, high range: CAD/USD 251 - 400+
+      You should always classify the tuition amount as reasonable, since this expense is not in the user's control.
       Provide the advice in the following JSON format:
       {
         "expenses_advice": [
@@ -84,27 +93,20 @@ const App = () => {
           },
           ...
         ],
-        "income_advice": [
-          {
-            "type": "<income type>",
-            "advice": "<advice>",
-            "classification": "<low/reasonable/high>"
-          },
-          ...
-        ]
       }
-    `;
-    try {
-      const response = await axios.post('http://127.0.0.1:5000/api/suggestions', { prompt });
-      setSuggestions(JSON.parse(response.data.suggestion));
-      setShowSuggestions(true); 
-    } catch (error) {
-      setSuggestions({ error: 'Error fetching suggestions. Please try again later.' });
-    } finally {
-      setLoading(false);
+      `;
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/api/suggestions', { prompt });
+        console.log(response.data.suggestion);
+        setSuggestions(JSON.parse(response.data.suggestion));
+        setShowSuggestions(true); 
+      } catch (error) {
+        setSuggestions({ error: 'Error fetching suggestions. Please try again later.' });
+      } finally {
+        setLoading(false); 
+      }
     }
   };
-
 
   const updateChart = (updatedExpenses, updatedIncome, balance, monthLabels) => {
     const months = monthLabels;
@@ -238,34 +240,53 @@ const App = () => {
       datasets: datasets
     });
   };
-
+  
   return (
     <div className="d-flex flex-column min-vh-100 justify-content-top align-items-center">
-      <div className="text-center w-100">
-
-        <Navbar bg="light" expand="lg" className="justify-content-center">
-            <Navbar.Brand>Student Budgeter</Navbar.Brand>
-        </Navbar>
-
+      <Navbar className="justify-content-center fixed-top" expand={false} style={{ backgroundColor: '#e4e5e6' }}>
+        <Navbar.Brand className="ml-auto">Student Budgeter</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className="ml-auto"/>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <NavDropdown title="Budgeting Resources - US Students" id="basic-nav-dropdown">
+                <NavDropdown.Item href="https://studentaid.gov/resources/prepare-for-college/students/budgeting">Budgeting</NavDropdown.Item>
+                <NavDropdown.Item href="https://studentaid.gov/resources/prepare-for-college/students/budgeting/creating-your-budget">Creating Your Budget</NavDropdown.Item>
+            </NavDropdown>
+            <NavDropdown title="Budgeting Resources - Canadian Students" id="basic-nav-dropdown">
+                <NavDropdown.Item href="https://www.csnpe-nslsc.canada.ca/en/managing-your-money/budgeting-for-student-life">Budgeting for Student Life</NavDropdown.Item>
+                <NavDropdown.Item href="https://www.canada.ca/en/financial-consumer-agency/services/pay-down-student-debt.html">Managing your budget as a student</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+      <div className="text-center w-100 pt-5 mt-5">
         <BalanceForm setBalance={setBalance} isValidValue={isValidValue} />
         <ExpenseForm addExpenses={addExpenses} expenses={expenses} isValidValue={isValidValue} />
         <IncomeForm addIncome={addIncome} incomeList={incomeList} isValidValue={isValidValue} />
-        
-        <p></p>
-        <select value={chartTimeRange} onChange={(e) => setChartTimeRange(e.target.value)}>
-          <option value="">Choose Time Range For Chart</option>
-          <option value="Fall">Fall Semester</option>
-          <option value="Winter">Winter Semester</option>
-          <option value="OneYear">One School Year</option>
-          <option value="FourYears">Four School Years</option>
-        </select>
-
-        <Button onClick={handleSubmitInfo} variant="primary">Submit All Financial Info</Button>
-        
-        {showChart && <BudgetChart data={chartData} />}
-        {loading && <p>Loading suggestions...</p>}
+        <Row>
+          <Col xs={10} className="mb-3 mx-auto">
+            <Form.Control
+              as="select"
+              value={chartTimeRange}
+              onChange={(e) => setChartTimeRange(e.target.value)}
+            >
+              <option value="">Choose Time Range For Chart</option>
+              <option value="Fall">Fall Semester</option>
+              <option value="Winter">Winter Semester</option>
+              <option value="OneSchoolYear">One School Year</option>
+              <option value="FourSchoolYears">Four School Years</option>
+            </Form.Control>
+          </Col>
+        </Row>
+        <Button onClick={handleSubmitInfo} variant="primary" className="mb-3">Submit All Financial Info</Button>
+        {showChart && (
+          <>
+            <BudgetChart data={chartData} resetZoomRef={resetZoomRef} />
+            <Button onClick={handleResetZoom} variant="primary" className="my-3">Reset Zoom</Button>
+          </>
+        )}
+        {loading && expenses.length !== 0 && <p>Loading suggestions...</p>}
         {showSuggestions && <Suggestions suggestions={suggestions} />}
-
       </div>
     </div>
   );
