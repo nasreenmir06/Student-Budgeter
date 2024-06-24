@@ -23,5 +23,6 @@ https://github.com/nasreenmir06/student-budgeter/assets/171378555/bafd50fb-582c-
 ## Things to Improve:
 - color differentiation
 - user should be able to download their chart
+- better GPT suggestions
 
 
