@@ -25,4 +25,5 @@ https://github.com/nasreenmir06/student-budgeter/assets/171378555/bafd50fb-582c-
 - user should be able to download their chart
 - better GPT suggestions
 
+I also wrote a Medium article about how I built this app. Read it here: https://medium.com/@nasreenmir06/how-i-built-a-student-budgeting-app-with-react-c867ed55ac05
 
